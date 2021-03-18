@@ -1,0 +1,12 @@
+credentials:
+  login: ""
+  password: ""
+webdriver:
+  chrome:
+    version: 89
+    platform: "chromedriver_win32"
+game:
+  world: 164
+  villages: ['3488']
+bot:
+  wait_time: 5
