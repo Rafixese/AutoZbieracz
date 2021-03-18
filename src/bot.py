@@ -2,6 +2,7 @@ import datetime
 from pathlib import Path
 from time import sleep
 import random
+import os
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -20,6 +21,9 @@ def web_wait(by, name):
     except:
         driver.quit()
 
+
+real_filepath = os.path.split(os.path.realpath(__file__))[0]
+os.chdir(real_filepath)
 
 logging.basicConfig(format='%(asctime)s :: %(message)s', level=logging.INFO)
 
