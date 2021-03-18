@@ -47,11 +47,10 @@ driver.find_element_by_class_name('btn-login').click()
 web_wait(By.CLASS_NAME, "world-select")
 logging.info('Successfully logged in!')
 
-logging.info(f'Entering world {CONFIG["game"]["world"]}')
-driver.get(f'https://www.plemiona.pl/page/play/pl{CONFIG["game"]["world"]}')
-
-web_wait(By.CLASS_NAME, "menu")
 while (True):
+    logging.info(f'Entering world {CONFIG["game"]["world"]}')
+    driver.get(f'https://www.plemiona.pl/page/play/pl{CONFIG["game"]["world"]}')
+    web_wait(By.CLASS_NAME, "menu")
     sleep_to_date = None
     max_sleep_time = -1
     for village in CONFIG["game"]["villages"]:
