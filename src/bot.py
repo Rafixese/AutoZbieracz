@@ -1,5 +1,7 @@
+import datetime
 from pathlib import Path
 from time import sleep
+import random
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -40,7 +42,8 @@ driver.get(f'https://www.plemiona.pl/page/play/pl{CONFIG["game"]["world"]}')
 
 web_wait(By.CLASS_NAME, "menu")
 while (True):
-    sleep_time = -1
+    sleep_to_date = None
+    max_sleep_time = -1
     for village in CONFIG["game"]["villages"]:
         script = open(f'../config/{village}.js', 'r').read()
         logging.info(f'Entering village {village}')
@@ -62,7 +65,13 @@ while (True):
             try:
                 scav_option.find_element_by_class_name('active-view')
                 status.append('active')
-                logging.info(scav_option.find_element_by_class_name('title').text + ' -> active')
+                time_str = scav_option.find_element_by_class_name('return-countdown').text
+                remaining_time = datetime.datetime.strptime(time_str, '%H:%M:%S')
+                remaining_time = datetime.timedelta(hours=remaining_time.hour, minutes=remaining_time.minute, seconds=remaining_time.second)
+                if remaining_time.total_seconds() > max_sleep_time:
+                    sleep_to_date = datetime.datetime.now() + remaining_time
+                    max_sleep_time = remaining_time.total_seconds()
+                logging.info(scav_option.find_element_by_class_name('title').text + ' -> active, ' + time_str + ' left')
 
                 continue
             except:
@@ -95,7 +104,14 @@ while (True):
                 logging.info('Launching mission')
                 mission.find_element_by_class_name('btn').click()
                 sleep(1)
+            continue
         else:
             logging.info('Can not send mission :(')
-    logging.info(f'Waiting {CONFIG["bot"]["wait_time"]} seconds.')
-    sleep(CONFIG['bot']['wait_time'])
+    try:
+        sleep_time = sleep_to_date - datetime.datetime.now()
+        sleep_time_seconds = sleep_time.total_seconds() + random.randint(3, 9)
+        logging.info(f'Waiting {sleep_time_seconds} seconds ({sleep_time})')
+    except:
+        sleep_time_seconds = 5
+        logging.info(f'Waiting {sleep_time_seconds} seconds')
+    sleep(sleep_time_seconds)

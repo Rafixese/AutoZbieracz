@@ -8,5 +8,3 @@ webdriver:
 game:
   world: 164
   villages: ['3488']
-bot:
-  wait_time: 5
