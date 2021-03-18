@@ -21,16 +21,16 @@ https://www.python.org/downloads/release/python-388/
 
 Wejdź do katalogu głównego AutoZbieracz przez terminal. Wykonaj polecenie.
 ```pip install -r requirements.txt```
-dla python 2 lub Windows lub
+dla Windows lub
 ```pip3 install -r requirements.txt```
-dla python 3
+dla python3 na linuxie/macu
 
 # Konfiguracja
 ## config.yaml
 
 - browser - Czy pokazać okno przeglądarki - ```True``` lub ```False```
 - credentials:
-  - login - nasz login do gry. ```"JanKowalski```
+  - login - nasz login do gry. ```"JanKowalski"```
   - password: - nasze hasło do gry ```"hasełko"```
 - webdriver:
   - chrome:
