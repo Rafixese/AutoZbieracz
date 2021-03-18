@@ -31,16 +31,18 @@ logging.info('Logging in...')
 driver.find_element_by_id('user').send_keys(CONFIG['credentials']['login'])
 driver.find_element_by_id('password').send_keys(CONFIG['credentials']['password'])
 driver.find_element_by_class_name('btn-login').click()
-logging.info('Successfully logged in!')
 
 web_wait(By.CLASS_NAME, "world-select")
+logging.info('Successfully logged in!')
 
 logging.info(f'Entering world {CONFIG["game"]["world"]}')
 driver.get(f'https://www.plemiona.pl/page/play/pl{CONFIG["game"]["world"]}')
 
 web_wait(By.CLASS_NAME, "menu")
 while (True):
+    sleep_time = -1
     for village in CONFIG["game"]["villages"]:
+        script = open(f'../config/{village}.js', 'r').read()
         logging.info(f'Entering village {village}')
         driver.get(
             f'https://pl{CONFIG["game"]["world"]}.plemiona.pl/game.php?village={village}&screen=place&mode=scavenge')
@@ -61,6 +63,7 @@ while (True):
                 scav_option.find_element_by_class_name('active-view')
                 status.append('active')
                 logging.info(scav_option.find_element_by_class_name('title').text + ' -> active')
+
                 continue
             except:
                 pass
@@ -73,8 +76,25 @@ while (True):
             except:
                 pass
 
+        scavenge_options.reverse()
+        status.reverse()
+
         if 'active' not in status:
             logging.info('Available to send new scavenger mission!')
+            missions_to_launch = [scav_mission for scav_mission, status in zip(scavenge_options, status) if status == 'inactive']
+            for mission in missions_to_launch:
+                logging.info('Launching js script')
+                driver.execute_script(script)
+                try:
+                    alert = driver.switch_to.alert
+                    logging.info(alert.text)
+                    alert.accept()
+                except:
+                    pass
+                sleep(1)
+                logging.info('Launching mission')
+                mission.find_element_by_class_name('btn').click()
+                sleep(1)
         else:
             logging.info('Can not send mission :(')
     logging.info(f'Waiting {CONFIG["bot"]["wait_time"]} seconds.')
