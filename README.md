@@ -21,16 +21,16 @@ https://www.python.org/downloads/release/python-388/
 
 Wejdź do katalogu głównego AutoZbieracz przez terminal. Wykonaj polecenie.
 ```pip install -r requirements.txt```
-dla python 2 lub Windows lub
+dla Windows lub
 ```pip3 install -r requirements.txt```
-dla python 3
+dla innych systemów
 
 # Konfiguracja
 ## config.yaml
 
 - browser - Czy pokazać okno przeglądarki - ```True``` lub ```False```
 - credentials:
-  - login - nasz login do gry. ```"JanKowalski```
+  - login - nasz login do gry. ```"JanKowalski"```
   - password: - nasze hasło do gry ```"hasełko"```
 - webdriver:
   - chrome:
@@ -61,6 +61,3 @@ Co do samej konfiguracji pliku odsyłam do dokumentacji twórcy:
 
 # Włączenie skryptu
 Uruchamiamy plik ```start.bat``` dla Windows lub ```start.sh``` dla pozostałych systemów.
-
-# Czynności niezalecane
-Przede wszystkim nie zaleca się logowania do plemion z innej przeglądarki w czasie działania bota. Może to przyczynić się do crasha programu.
