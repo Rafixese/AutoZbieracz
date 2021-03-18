@@ -1,4 +1,4 @@
-browser: True
+browser: False
 
 credentials:
   login: ""
