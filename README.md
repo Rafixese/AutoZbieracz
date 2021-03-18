@@ -3,6 +3,12 @@ Skrypt do automatycznego zbierania surowców w grze przeglądarkowej Plemiona
 
 # Instalacja
 
+## Bot
+
+Wchodzimy i pobieramy najnowsze wydanie aplikacji.
+
+https://github.com/Rafixese/AutoZbieracz/releases/
+
 ## Google Chrome
 
 https://www.google.com/chrome/
@@ -40,7 +46,7 @@ dla python 3
 
 ## pliki skryptów (.js)
 
-Świeżo pobrana wersja AutoZbieracza w folderze ```config/``` zawiera plik ```template.js```. Tworzymy kopię tego pliku i nazywamy go numerem naszej wioski, który podaliśmy w tablicy w pliku ```config.yaml```. Wynikowa nazwa pliku powinna wyglądać mniej więcej tak: ```1234.js``` i znajdować się w tym samymy folderze co ```template.js```.
+Świeżo pobrana wersja AutoZbieracza w folderze ```config/``` zawiera plik ```template.js```. Tworzymy kopię tego pliku i nazywamy go numerem naszej wioski, który podaliśmy w tablicy w pliku ```config.yaml```. Wynikowa nazwa pliku powinna wyglądać mniej więcej tak: ```1234.js``` i znajdować się w tym samymy folderze co ```template.js```. Jeśli mamy więcej wiosek to dla każdej tworzymy taki plik.
 
 Co do samej konfiguracji pliku odsyłam do dokumentacji twórcy:
 ```
