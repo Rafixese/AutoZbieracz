@@ -126,4 +126,5 @@ while (True):
     except:
         sleep_time_seconds = 5
         logging.info(f'Waiting {sleep_time_seconds} seconds')
+    driver.refresh()
     sleep(sleep_time_seconds)
