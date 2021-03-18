@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from utils.config import CONFIG
 import logging
 
@@ -26,7 +27,12 @@ DRIVER_PATH = Path('../drivers/').joinpath(str(CONFIG['webdriver']['chrome']['ve
     CONFIG['webdriver']['chrome']['platform'])
 DRIVER_PATH_WINDOWS = DRIVER_PATH / 'chromedriver'
 
-driver = webdriver.Chrome(DRIVER_PATH_WINDOWS)
+options = Options()
+
+if not CONFIG['browser']:
+    options.add_argument("--headless")
+
+driver = webdriver.Chrome(DRIVER_PATH_WINDOWS, options=options)
 driver.get('https://www.plemiona.pl/')
 
 logging.info('Logging in...')
@@ -67,7 +73,8 @@ while (True):
                 status.append('active')
                 time_str = scav_option.find_element_by_class_name('return-countdown').text
                 remaining_time = datetime.datetime.strptime(time_str, '%H:%M:%S')
-                remaining_time = datetime.timedelta(hours=remaining_time.hour, minutes=remaining_time.minute, seconds=remaining_time.second)
+                remaining_time = datetime.timedelta(hours=remaining_time.hour, minutes=remaining_time.minute,
+                                                    seconds=remaining_time.second)
                 if remaining_time.total_seconds() > max_sleep_time:
                     sleep_to_date = datetime.datetime.now() + remaining_time
                     max_sleep_time = remaining_time.total_seconds()
@@ -90,7 +97,8 @@ while (True):
 
         if 'active' not in status:
             logging.info('Available to send new scavenger mission!')
-            missions_to_launch = [scav_mission for scav_mission, status in zip(scavenge_options, status) if status == 'inactive']
+            missions_to_launch = [scav_mission for scav_mission, status in zip(scavenge_options, status) if
+                                  status == 'inactive']
             for mission in missions_to_launch:
                 logging.info('Launching js script')
                 driver.execute_script(script)

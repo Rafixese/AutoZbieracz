@@ -1,3 +1,5 @@
+browser: True
+
 credentials:
   login: ""
   password: ""
