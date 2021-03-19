@@ -36,6 +36,8 @@ options = Options()
 if not CONFIG['browser']:
     options.add_argument("--headless")
 
+options.add_argument("window-size=1920,1080")
+
 driver = webdriver.Chrome(DRIVER_PATH_WINDOWS, options=options)
 driver.get('https://www.plemiona.pl/')
 
