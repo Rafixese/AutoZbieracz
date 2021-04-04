@@ -54,8 +54,8 @@ while (True):
     driver.get(f'https://www.plemiona.pl/page/play/pl{CONFIG["game"]["world"]}')
     web_wait(By.CLASS_NAME, "menu")
     sleep_to_date = None
-    max_sleep_time = -1
     for village in CONFIG["game"]["villages"]:
+        max_sleep_time = -1
         script = open(f'../config/{village}.js', 'r').read()
         logging.info(f'Entering village {village}')
         driver.get(
@@ -81,8 +81,12 @@ while (True):
                 remaining_time = datetime.timedelta(hours=remaining_time.hour, minutes=remaining_time.minute,
                                                     seconds=remaining_time.second)
                 if remaining_time.total_seconds() > max_sleep_time:
-                    sleep_to_date = datetime.datetime.now() + remaining_time
+                    sleep_to_date_village = datetime.datetime.now() + remaining_time
                     max_sleep_time = remaining_time.total_seconds()
+                if sleep_to_date is None:
+                    sleep_to_date = sleep_to_date_village
+                elif sleep_to_date > sleep_to_date_village:
+                    sleep_to_date = sleep_to_date_village
                 logging.info(scav_option.find_element_by_class_name('title').text + ' -> active, ' + time_str + ' left')
 
                 continue
