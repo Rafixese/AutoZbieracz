@@ -54,6 +54,7 @@ while (True):
     driver.get(f'https://www.plemiona.pl/page/play/pl{CONFIG["game"]["world"]}')
     web_wait(By.CLASS_NAME, "menu")
     sleep_to_date = None
+    mission_was_launched = False
     for village in CONFIG["game"]["villages"]:
         max_sleep_time = -1
         script = open(f'../config/{village}.js', 'r').read()
@@ -111,6 +112,7 @@ while (True):
             for mission in missions_to_launch:
                 logging.info('Launching js script')
                 driver.execute_script(script)
+                mission_was_launched = True
                 try:
                     alert = driver.switch_to.alert
                     logging.info(alert.text)
@@ -125,6 +127,8 @@ while (True):
         else:
             logging.info('Can not send mission :(')
     try:
+        if mission_was_launched:
+            sleep_to_date = None
         sleep_time = sleep_to_date - datetime.datetime.now()
         sleep_time_seconds = sleep_time.total_seconds() + random.randint(3, 9)
         logging.info(f'Waiting {sleep_time_seconds} seconds ({sleep_time})')
