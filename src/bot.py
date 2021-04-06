@@ -102,6 +102,14 @@ while (True):
             except:
                 pass
 
+            try:
+                scav_option.find_element_by_class_name('unlocking-view')
+                status.append('unlocking')
+                logging.info(scav_option.find_element_by_class_name('title').text + ' -> unlocking')
+                continue
+            except:
+                pass
+
         scavenge_options.reverse()
         status.reverse()
 
